@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">GameCep</string>
+    <string name="criar_servidor">Criar Servidor</string>
+    <string name="entrar_como_jogador">Entrar como jogador</string>
+    <string name="identifique_se">Identifique-se</string>
+    <string name="nome">Nome:</string>
+    <string name="nome_do_jogador">Nome do jogador</string>
+    <string name="cep">CEP:</string>
+    <string name="cep_do_jogador">CEP do jogador</string>
+    <string name="verificar_localizacao">Verificar Localização</string>
+    <string name="estado_label">Estado:</string>
+    <string name="cidade_label">Cidade:</string>
+    <string name="bairro_label">Bairro:</string>
+    <string name="rua_av_label">Rua/Av:</string>
+    <string name="estado">Estado</string>
+    <string name="cidade">Cidade</string>
+    <string name="bairro">Bairro</string>
+    <string name="rua_avenida">Rua/Avenida</string>
+    <string name="gamecep">GameCEP</string>
+    <string name="local_valido">Localização Válida</string>
+</resources>
