@@ -40,6 +40,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
     TextView localValidoTextView;
     Button criarServidorButton;
     Button  entrarJogoButton;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,6 @@ public class IdentificacaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_identificacao);
         setTitle("Identificação");
         inicializarElementos();
-
-        final Bundle bundle = new Bundle();
-        bundle.putString("nome", nomeEditText.getText().toString());
-        bundle.putString("cep", cepEditText.getText().toString());
-
 
         verificarLocalizacaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,15 +132,24 @@ public class IdentificacaoActivity extends AppCompatActivity {
 //                    Toast.makeText(this,
 //                            "CEP inválido", Toast.LENGTH_LONG).show();
 //                }
-                final String resultadoEstado = resultadoJsonObject.getString("uf");
-                final String resultadoCidade = resultadoJsonObject.getString("localidade");
-                final String resultadoBairro = resultadoJsonObject.getString("bairro");
-                final String resultadoRua = resultadoJsonObject.getString("logradouro");
+                final String resultadoEstado = resultadoJsonObject.getString("uf").toString();
+                final String resultadoCidade = resultadoJsonObject.getString("localidade").toString();
+                final String resultadoBairro = resultadoJsonObject.getString("bairro").toString();
+                final String resultadoRua = resultadoJsonObject.getString("logradouro").toString();
 
                 estadoTextView.setText(resultadoEstado);
                 cidadeTextView.setText(resultadoCidade);
                 bairroTextView.setText(resultadoBairro);
                 ruaTextView.setText(resultadoRua);
+
+                bundle = new Bundle();
+                bundle.putString("nome", nomeEditText.getText().toString());
+                bundle.putString("cep", cepEditText.getText().toString());
+                bundle.putString("estado", estadoTextView.getText().toString());
+                bundle.putString("cidade", cidadeTextView.getText().toString());
+                bundle.putString("bairro", bairroTextView.getText().toString());
+                bundle.putString("rua", ruaTextView.getText().toString());
+                Log.v("GameCep", bundle.toString());
 
 //                if (estadoTextView.getText() == ""){
 //                    localValidoTextView.setText("Localização inválida. Tente novamente!!!");
@@ -217,8 +222,8 @@ public class IdentificacaoActivity extends AppCompatActivity {
     }
 
     private void inicializarElementos() {
-        nomeEditText = findViewById(R.id.nomeEditText);
-        cepEditText = findViewById(R.id.cepEditText);
+        nomeEditText = findViewById(R.id.nomeTextView);
+        cepEditText = findViewById(R.id.cepTextView);
         verificarLocalizacaoButton = findViewById(R.id.verificarLocalizacaoButton);
         estadoLabelTextView = findViewById(R.id.estadoLabelTextView);
         estadoTextView = findViewById(R.id.estadoTextView);
@@ -231,14 +236,6 @@ public class IdentificacaoActivity extends AppCompatActivity {
         localValidoTextView = findViewById(R.id.localValidoTextView);
         criarServidorButton = findViewById(R.id.criarServidorButton);
         entrarJogoButton = findViewById(R.id.entrarJogoButton);
-    }
-
-    public void irParaCriarServidor(){
-
-    }
-
-    public void irParaEntrarJogo(){
-
     }
 
 

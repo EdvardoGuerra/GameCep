@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nomeTextView"
+        android:id="@+id/nomeLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tituloTextView" />
 
     <EditText
-        android:id="@+id/nomeEditText"
+        android:id="@+id/nomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,33 +38,33 @@
         android:hint="@string/nome_do_jogador"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/nomeTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/nomeLabelTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/nomeTextView"
-        app:layout_constraintTop_toTopOf="@+id/nomeTextView" />
+        app:layout_constraintStart_toEndOf="@+id/nomeLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/nomeLabelTextView" />
 
     <TextView
-        android:id="@+id/cepTextView"
+        android:id="@+id/cepLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/cep"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/nomeTextView"
-        app:layout_constraintTop_toBottomOf="@+id/nomeTextView" />
+        app:layout_constraintStart_toStartOf="@+id/nomeLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nomeLabelTextView" />
 
     <EditText
-        android:id="@+id/cepEditText"
+        android:id="@+id/cepTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/cep_do_jogador"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/cepTextView"
-        app:layout_constraintStart_toStartOf="@+id/nomeEditText"
-        app:layout_constraintTop_toTopOf="@+id/cepTextView"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/cepLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/nomeTextView"
+        app:layout_constraintTop_toTopOf="@+id/cepLabelTextView" />
 
     <Button
         android:id="@+id/verificarLocalizacaoButton"
@@ -78,7 +78,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cepEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/cepTextView" />
 
     <TextView
         android:id="@+id/estadoLabelTextView"
@@ -88,7 +88,7 @@
         android:text="@string/estado_label"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/cepTextView"
+        app:layout_constraintStart_toStartOf="@+id/cepLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/verificarLocalizacaoButton" />
 
     <TextView

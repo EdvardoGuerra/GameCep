@@ -2,12 +2,54 @@ package br.com.gamecep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class ServidorActivity extends AppCompatActivity {
     String nome;
     String cep;
+    String estado;
+    String cidade;
+    String bairro;
+    String rua;
+    Bundle bundle;
+    TextView nomeTextView;
+    TextView cepTextView;
+    TextView estadoTextView;
+    TextView cidadeTextView;
+    TextView bairroTextView;
+    TextView ruaTextView;
+    TextView portaTextView;
+    TextView ipTextView;
+    EditText cepInicioEditText;
+    TextView cepFimTextView;
+    TextView dicaTextView;
+    TextView pontosTextView;
+    Button localizarInimigoButton;
+    TextView nomeInimigoTextView;
+    ServerSocket welcomeSocket;
+    DataOutputStream socketOutput;
+    BufferedReader socketEntrada;
+    DataInputStream fromClient;
+    boolean continuarRodando = false;
+    public static final int numPorta = 9090;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +58,98 @@ public class ServidorActivity extends AppCompatActivity {
 
         setTitle("Servidor");
 
-        Bundle bundle;
-        bundle = getIntent().getExtras();
-        if (bundle != null){
-            nome = bundle.getString("nome", "Erro");
-            cep = bundle.getString("cep", "Erro");
+        inicializarElementos();
 
-            Log.v("GameCep", "Nome: " + nome);
-            Log.v("GameCep", "CEP: " + cep);
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
+        Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
+        if (bundle != null) {
+            nome = bundle.getString("nome", "Erro");
+            Log.v("GameCep", nome);
+            cep = bundle.getString("cep", "Erro");
+            estado = bundle.getString("estado", "Erro");
+            cidade = bundle.getString("cidade", "Erro");
+            bairro = bundle.getString("bairro", "Erro");
+            rua = bundle.getString("rua", "Erro");
+        }
+        nomeTextView.setText(nome);
+        cepTextView.setText(cep);
+        estadoTextView.setText(estado);
+        cidadeTextView.setText(cidade);
+        bairroTextView.setText(bairro);
+        ruaTextView.setText(rua);
+
+        ligarServidor();
+    }
+
+    private void inicializarElementos() {
+        nomeTextView = findViewById(R.id.nomeTextView);
+        cepTextView = findViewById(R.id.cepTextView);
+        estadoTextView = findViewById(R.id.estadoTextView);
+        cidadeTextView = findViewById(R.id.cidadeTextView);
+        bairroTextView = findViewById(R.id.bairroTextView);
+        ruaTextView = findViewById(R.id.ruaTextView);
+        portaTextView = findViewById(R.id.portaTextView);
+        ipTextView = findViewById(R.id.ipTextView);
+        cepInicioEditText = findViewById(R.id.cepInicioEditText);
+        cepFimTextView = findViewById(R.id.cepFimTextView);
+        dicaTextView = findViewById(R.id.dicaTextView);
+        pontosTextView = findViewById(R.id.pontosTextView);
+        localizarInimigoButton = findViewById(R.id.localizarInimigoButton);
+        nomeInimigoTextView = findViewById(R.id.nomeInimigoTextView);
+    }
+
+    public void ligarServidor() {
+        ConnectivityManager connectivityManager;
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network[] networks = connectivityManager.getAllNetworks();
+        for (Network network : networks) {
+            NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
+            if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                NetworkCapabilities networkCapabilities =
+                        connectivityManager.getNetworkCapabilities(network);
+                if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    WifiManager wifiManager = (WifiManager) getApplicationContext()
+                            .getSystemService(WIFI_SERVICE);
+                    String macAddress = wifiManager.getConnectionInfo().getMacAddress();
+                    Log.v("GameCep", "Wifi - MAC:" + macAddress);
+
+                    int ip = wifiManager.getConnectionInfo().getIpAddress();
+                    String ipAddress = String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+                    ipTextView.setText(ipAddress);
+                    portaTextView.setText(String.valueOf(numPorta));
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ligarServerCodigo();
+                        }
+                    });
+                    t.start();
+
+                }
+
+            }
+        }
+    }
+
+    private void ligarServerCodigo() {
+        String result = "";
+        try{
+            Log.v("GameCep", "ligando o servidor");
+            welcomeSocket = new ServerSocket(numPorta);
+            Socket connectionSocket =  welcomeSocket.accept();
+            Log.v("GameCep", "nova conexao");
+
+            fromClient = new DataInputStream(connectionSocket.getInputStream());
+            socketOutput = new DataOutputStream(connectionSocket.getOutputStream());
+            continuarRodando =  true;
+            while (continuarRodando){
+                result = fromClient.readUTF();
+
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

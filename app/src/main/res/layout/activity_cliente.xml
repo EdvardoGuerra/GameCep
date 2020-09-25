@@ -6,4 +6,331 @@
     android:layout_height="match_parent"
     tools:context=".ClienteActivity">
 
+    <TextView
+        android:id="@+id/tituloTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/jogador"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nomeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/nome"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloTextView" />
+
+    <TextView
+        android:id="@+id/nomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/nome_do_jogador"
+        android:ems="13"
+        android:importantForAutofill="no"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nomeLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/cepTextView"
+        app:layout_constraintTop_toTopOf="@+id/nomeLabelTextView" />
+
+    <TextView
+        android:id="@+id/cepLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/cep"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/nomeLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nomeLabelTextView" />
+
+    <TextView
+        android:id="@+id/cepTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cep_do_jogador"
+        android:ems="13"
+        android:importantForAutofill="no"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cepLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/estadoTextView"
+        app:layout_constraintTop_toTopOf="@+id/cepLabelTextView" />
+
+    <TextView
+        android:id="@+id/estadoLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/estado_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/cepLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/cepLabelTextView" />
+
+    <TextView
+        android:id="@+id/cidadeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/cidade_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/estadoLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/estadoLabelTextView" />
+
+    <TextView
+        android:id="@+id/bairroLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/bairro_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/cidadeLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/cidadeLabelTextView" />
+
+    <TextView
+        android:id="@+id/ruaLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/rua_av_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bairroLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/bairroLabelTextView" />
+
+    <TextView
+        android:id="@+id/estadoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/estado"
+        android:ems="13"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/estadoLabelTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@+id/estadoLabelTextView" />
+
+    <TextView
+        android:id="@+id/cidadeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cidade"
+        android:ems="13"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/cidadeLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/estadoTextView" />
+
+    <TextView
+        android:id="@+id/bairroTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/bairro"
+        android:ems="13"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/bairroLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/cidadeTextView" />
+
+    <TextView
+        android:id="@+id/ruaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/ruaLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/bairroTextView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dados_conexao"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ruaTextView" />
+
+    <TextView
+        android:id="@+id/porta_labelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/porta"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ruaLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/portaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/porta"
+        android:ems="13"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/porta_labelTextView"
+        app:layout_constraintStart_toStartOf="@+id/ruaTextView"
+        app:layout_constraintTop_toTopOf="@+id/porta_labelTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/ip_labelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/ip_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/porta_labelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/porta_labelTextView" />
+
+    <TextView
+        android:id="@+id/ipTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/endereco_ip"
+        android:ems="13"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ip_labelTextView"
+        app:layout_constraintStart_toStartOf="@+id/portaTextView" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/inimigo"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ipTextView" />
+
+    <TextView
+        android:id="@+id/cep2_labelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/cep"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ip_labelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <EditText
+        android:id="@+id/cepInicioEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:hint="@string/_000"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/cep2_labelTextView"
+        app:layout_constraintStart_toStartOf="@+id/ipTextView"
+        app:layout_constraintTop_toTopOf="@+id/cep2_labelTextView" />
+
+    <TextView
+        android:id="@+id/cepFimTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/zeros"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cep2_labelTextView"
+        app:layout_constraintStart_toEndOf="@+id/cepInicioEditText" />
+
+    <Button
+        android:id="@+id/localizarInimigoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botao_azul_arredondado"
+        android:ems="8"
+        android:text="@string/localizar"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cepInicioEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cepFimTextView"
+        app:layout_constraintTop_toTopOf="@+id/cepInicioEditText" />
+
+    <TextView
+        android:id="@+id/dica_labelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/dica"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/cep2_labelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/cep2_labelTextView" />
+
+    <TextView
+        android:id="@+id/dicaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dica_labelTextView"
+        app:layout_constraintStart_toStartOf="@+id/cepInicioEditText" />
+
+    <TextView
+        android:id="@+id/pontosLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pontos"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dicaTextView" />
+
+    <TextView
+        android:id="@+id/pontosTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/_100"
+        android:textColor="#2196F3"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pontosLabelTextView" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/nome"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ip_labelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/nomeInimigoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/ipTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,4 +18,18 @@
     <string name="rua_avenida">Rua/Avenida</string>
     <string name="gamecep">GameCEP</string>
     <string name="local_valido">Localização Válida</string>
+    <string name="jogador">Jogador</string>
+    <string name="inimigo">Inimigo</string>
+    <string name="porta">Porta:</string>
+    <string name="ip_label">IP:</string>
+    <string name="endereco_ip">Endereço ip</string>
+    <string name="dados_conexao">Dados da Conexão</string>
+    <string name="zeros">00-000</string>
+    <string name="cep_inimigo">CEP inicial do inimigo</string>
+    <string name="localizar">Localizar</string>
+    <string name="_000">000</string>
+    <string name="_00_000">00-000</string>
+    <string name="dica">Dica:</string>
+    <string name="pontos">Pontos</string>
+    <string name="_100">100</string>
 </resources>
