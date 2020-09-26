@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -51,6 +53,7 @@ public class ServidorActivity extends AppCompatActivity {
     BufferedReader socketEntrada;
     DataInputStream fromClient;
     boolean continuarRodando = false;
+    long pings, pongs;
 
 
     @Override
@@ -103,6 +106,7 @@ public class ServidorActivity extends AppCompatActivity {
         localizarInimigoButton = findViewById(R.id.localizarInimigoButton);
         nomeInimigoTextView = findViewById(R.id.nomeInimigoTextView);
     }
+
 
 
 }

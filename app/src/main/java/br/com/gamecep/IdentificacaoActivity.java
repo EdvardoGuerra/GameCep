@@ -96,6 +96,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ipAddress = ipEditText.getText().toString();
+                bundle.putString("ipAddress", ipAddress);
                 conectar();
                 Intent intent = new Intent(IdentificacaoActivity.this,
                         ClienteActivity.class);
@@ -143,7 +144,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
                     String macAddress = wifiManager.getConnectionInfo().getMacAddress();
                     Log.v("PDM", "Wifi - MAC:" + macAddress);
 
-                    int ip = wifiManager.getConnectionInfo().getIpAddress();
+                    ip = wifiManager.getConnectionInfo().getIpAddress();
                     ipAddress =
                             String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
                     bundle.putInt("ip", ip);

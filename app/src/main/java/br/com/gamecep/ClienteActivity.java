@@ -47,6 +47,7 @@ public class ClienteActivity extends AppCompatActivity {
     boolean continuarRodando = false;
     public static final int numPorta = 9090;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +68,8 @@ public class ClienteActivity extends AppCompatActivity {
             bairro = bundle.getString("bairro", "Erro");
             rua = bundle.getString("rua", "Erro");
             porta = bundle.getInt("porta", 0);
-            ip = bundle.getInt("ip", 0);
-            ipAddress =
-                    String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+            ipAddress = bundle.getString("ipAddress", "0.0.0.0");
+//            ipAddress = String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
