@@ -32,4 +32,7 @@
     <string name="dica">Dica:</string>
     <string name="pontos">Pontos</string>
     <string name="_100">100</string>
+    <string name="ip">IP:</string>
+    <string name="_9090">9090</string>
+    <string name="xxx_xxx_x_x">xxx.xxx.x.x</string>
 </resources>

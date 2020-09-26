@@ -22,6 +22,9 @@ public class ClienteActivity extends AppCompatActivity {
     String cidade;
     String bairro;
     String rua;
+    int porta;
+    int ip;
+    String ipAddress;
     Bundle bundle;
     TextView nomeTextView;
     TextView cepTextView;
@@ -63,6 +66,10 @@ public class ClienteActivity extends AppCompatActivity {
             cidade = bundle.getString("cidade", "Erro");
             bairro = bundle.getString("bairro", "Erro");
             rua = bundle.getString("rua", "Erro");
+            porta = bundle.getInt("porta", 0);
+            ip = bundle.getInt("ip", 0);
+            ipAddress =
+                    String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
@@ -70,6 +77,8 @@ public class ClienteActivity extends AppCompatActivity {
         cidadeTextView.setText(cidade);
         bairroTextView.setText(bairro);
         ruaTextView.setText(rua);
+        ipTextView.setText(ipAddress);
+        portaTextView.setText("9090");
 
         conectar();
 

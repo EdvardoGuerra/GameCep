@@ -28,6 +28,9 @@ public class ServidorActivity extends AppCompatActivity {
     String cidade;
     String bairro;
     String rua;
+    int porta;
+    int ip;
+    String ipAddress;
     Bundle bundle;
     TextView nomeTextView;
     TextView cepTextView;
@@ -48,7 +51,6 @@ public class ServidorActivity extends AppCompatActivity {
     BufferedReader socketEntrada;
     DataInputStream fromClient;
     boolean continuarRodando = false;
-    public static final int numPorta = 9090;
 
 
     @Override
@@ -65,12 +67,15 @@ public class ServidorActivity extends AppCompatActivity {
         Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
         if (bundle != null) {
             nome = bundle.getString("nome", "Erro");
-            Log.v("GameCep", nome);
             cep = bundle.getString("cep", "Erro");
             estado = bundle.getString("estado", "Erro");
             cidade = bundle.getString("cidade", "Erro");
             bairro = bundle.getString("bairro", "Erro");
             rua = bundle.getString("rua", "Erro");
+            porta = bundle.getInt("porta", 0);
+            ip = bundle.getInt("ip", 0);
+            ipAddress =
+                    String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
@@ -78,8 +83,8 @@ public class ServidorActivity extends AppCompatActivity {
         cidadeTextView.setText(cidade);
         bairroTextView.setText(bairro);
         ruaTextView.setText(rua);
-
-        ligarServidor();
+        ipTextView.setText(ipAddress);
+        portaTextView.setText("9090");
     }
 
     private void inicializarElementos() {
@@ -99,57 +104,5 @@ public class ServidorActivity extends AppCompatActivity {
         nomeInimigoTextView = findViewById(R.id.nomeInimigoTextView);
     }
 
-    public void ligarServidor() {
-        ConnectivityManager connectivityManager;
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network[] networks = connectivityManager.getAllNetworks();
-        for (Network network : networks) {
-            NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
-            if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                NetworkCapabilities networkCapabilities =
-                        connectivityManager.getNetworkCapabilities(network);
-                if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    WifiManager wifiManager = (WifiManager) getApplicationContext()
-                            .getSystemService(WIFI_SERVICE);
-                    String macAddress = wifiManager.getConnectionInfo().getMacAddress();
-                    Log.v("GameCep", "Wifi - MAC:" + macAddress);
 
-                    int ip = wifiManager.getConnectionInfo().getIpAddress();
-                    String ipAddress = String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
-                    ipTextView.setText(ipAddress);
-                    portaTextView.setText(String.valueOf(numPorta));
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ligarServerCodigo();
-                        }
-                    });
-                    t.start();
-
-                }
-
-            }
-        }
-    }
-
-    private void ligarServerCodigo() {
-        String result = "";
-        try{
-            Log.v("GameCep", "ligando o servidor");
-            welcomeSocket = new ServerSocket(numPorta);
-            Socket connectionSocket =  welcomeSocket.accept();
-            Log.v("GameCep", "nova conexao");
-
-            fromClient = new DataInputStream(connectionSocket.getInputStream());
-            socketOutput = new DataOutputStream(connectionSocket.getOutputStream());
-            continuarRodando =  true;
-            while (continuarRodando){
-                result = fromClient.readUTF();
-
-            }
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }

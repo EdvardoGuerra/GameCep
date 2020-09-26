@@ -84,7 +84,7 @@
         android:id="@+id/estadoLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="@string/estado_label"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -95,7 +95,7 @@
         android:id="@+id/cidadeLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/cidade_label"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -106,7 +106,7 @@
         android:id="@+id/bairroLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/bairro_label"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -117,7 +117,7 @@
         android:id="@+id/ruaLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/rua_av_label"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -134,7 +134,7 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/estadoLabelTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/estadoLabelTextView" />
 
     <TextView
@@ -173,7 +173,7 @@
         android:id="@+id/localValidoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/local_valido"
         android:textSize="18sp"
         android:textStyle="italic"
@@ -186,7 +186,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/botao_azul_arredondado"
         android:text="@string/criar_servidor"
@@ -200,7 +200,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/botao_azul_arredondado"
         android:text="@string/entrar_como_jogador"
@@ -208,4 +208,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/criarServidorButton" />
+
+    <TextView
+        android:id="@+id/ipLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/ip"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/entrarJogoButton" />
+
+    <TextView
+        android:id="@+id/portaLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/porta"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ipLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/ipLabelTextView" />
+
+    <EditText
+        android:id="@+id/ipEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/xxx_xxx_x_x"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/ipLabelTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ipLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/ipLabelTextView"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/portaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_9090"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/portaLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/ipEditText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
