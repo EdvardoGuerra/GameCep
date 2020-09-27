@@ -2,13 +2,7 @@ package br.com.gamecep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +13,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class ServidorActivity extends AppCompatActivity {
     String nome;
@@ -32,8 +24,13 @@ public class ServidorActivity extends AppCompatActivity {
     String rua;
     int porta;
     int ip;
+    int pontos =  100;
     String ipAddress;
     Bundle bundle;
+    String nomeInimigo;
+    String cepInimigo;
+    String cepInimigoInicio;
+    String cepInimigoFim;
     TextView nomeTextView;
     TextView cepTextView;
     TextView estadoTextView;
@@ -65,6 +62,9 @@ public class ServidorActivity extends AppCompatActivity {
 
         inicializarElementos();
 
+        nomeInimigo = "Fulano";
+        cepInimigo = "69040150";
+
         Intent intent = getIntent();
         bundle = intent.getExtras();
         Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
@@ -88,6 +88,50 @@ public class ServidorActivity extends AppCompatActivity {
         ruaTextView.setText(rua);
         ipTextView.setText(ipAddress);
         portaTextView.setText("9090");
+        pontosTextView.setText("100");
+
+        identificarInimigo();
+    }
+
+    public void identificarInimigo(){
+        cepInimigoInicio = cepInimigo.substring(0, 3);
+        cepInimigoFim = cepInimigo.substring(3,5) + "-" + cepInimigo.substring(5);
+        Log.v("GameCep", cepInimigo);
+        Log.v("GameCep", cepInimigoInicio);
+        Log.v("GameCep", cepInimigoFim);
+
+        nomeInimigoTextView.setText(nomeInimigo);
+        cepFimTextView.setText(cepInimigoFim);
+    }
+
+    public void localizarInimigo(View view){
+        int cepParcial = Integer.parseInt(cepInicioEditText.getText().toString());
+        int cepParcialInimigo = Integer.parseInt(cepInimigoInicio);
+        if (cepParcial == cepParcialInimigo){
+            dicaTextView.setText("Parabéns. Você acertou");
+        } else if (cepParcial > cepParcialInimigo){
+            dicaTextView.setText("Errou. CEP Inimigo é menor");
+            pontos--;
+            Log.v("GameCep", "pontos: " + pontos);
+            atualizarPontos();
+
+
+        } else if (cepParcial < cepParcialInimigo){
+            dicaTextView.setText("Errou. CEP Inimigo é maior");
+            pontos--;
+            Log.v("GameCep", "pontos: " + pontos);
+            atualizarPontos();
+
+        }
+    }
+
+    private void atualizarPontos() {
+        pontosTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                pontosTextView.setText(pontos);
+            }
+        });
     }
 
     private void inicializarElementos() {

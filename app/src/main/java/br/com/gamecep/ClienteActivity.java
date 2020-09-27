@@ -26,6 +26,8 @@ public class ClienteActivity extends AppCompatActivity {
     int ip;
     String ipAddress;
     Bundle bundle;
+    String nomeInimigo;
+    String cepInimigo;
     TextView nomeTextView;
     TextView cepTextView;
     TextView estadoTextView;

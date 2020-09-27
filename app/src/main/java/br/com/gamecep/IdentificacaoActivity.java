@@ -142,14 +142,14 @@ public class IdentificacaoActivity extends AppCompatActivity {
                     WifiManager wifiManager =
                             (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
                     String macAddress = wifiManager.getConnectionInfo().getMacAddress();
-                    Log.v("PDM", "Wifi - MAC:" + macAddress);
+                    Log.v("GameCep", "Wifi - MAC:" + macAddress);
 
                     ip = wifiManager.getConnectionInfo().getIpAddress();
                     ipAddress =
                             String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
                     bundle.putInt("ip", ip);
 
-                    Log.v("PDM", "Wifi - IP:" + ipAddress);
+                    Log.v("GameCep", "Wifi - IP:" + ipAddress);
 
                     Thread t = new Thread(new Runnable() {
                         @Override
@@ -174,11 +174,11 @@ public class IdentificacaoActivity extends AppCompatActivity {
 
         String result = "";
         try {
-            Log.v("SMD", "Ligando o Server");
+            Log.v("GameCep", "Ligando o Server");
             bundle.putInt("porta", porta);
             welcomeSocket = new ServerSocket(porta);
             Socket connectionSocket = welcomeSocket.accept();
-            Log.v("SMD", "Nova conexão");
+            Log.v("GameCep", "Nova conexão");
 
             //Instanciando os canais de stream
             fromClient = new DataInputStream(connectionSocket.getInputStream());
@@ -186,14 +186,14 @@ public class IdentificacaoActivity extends AppCompatActivity {
             continuarRodando = true;
             while (continuarRodando) {
                 result = fromClient.readUTF();
-                if (result.compareTo("PING") == 0) {
-                    //enviar Pong
-                    socketOutput.writeUTF("PONG");
-                    socketOutput.flush();
-                }
+//                if (result.compareTo("PING") == 0) {
+////                    //enviar Pong
+////                    socketOutput.writeUTF("PONG");
+////                    socketOutput.flush();
+////                }
             }
 
-            Log.v("SMD", result);
+            Log.v("GameCep", result);
             //Enviando dados para o servidor
         } catch (Exception ex) {
             ex.printStackTrace();

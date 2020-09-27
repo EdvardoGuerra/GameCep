@@ -261,6 +261,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/botao_azul_arredondado"
         android:ems="6"
+        android:onClick="localizarInimigo"
         android:text="@string/localizar"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/cepInicioEditText"
@@ -283,7 +284,7 @@
         android:id="@+id/dicaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="8"
+        android:ems="14"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/dica_labelTextView"
         app:layout_constraintStart_toStartOf="@+id/cepInicioEditText" />
