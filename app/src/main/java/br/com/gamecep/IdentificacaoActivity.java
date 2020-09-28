@@ -56,6 +56,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
     DataOutputStream socketOutput;
     DataInputStream socketInput;
     boolean continuarRodando;
+    boolean conectado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class IdentificacaoActivity extends AppCompatActivity {
         setTitle("Identificação");
         inicializarElementos();
         bundle = new Bundle();
+
+        conectado = estaConectado();
 
         verificarLocalizacaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +87,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
         criarServidorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ligarServidor();
+//                ligarServidor();
                 Intent intent = new Intent(IdentificacaoActivity.this,
                         ServidorActivity.class);
                 intent.putExtras(bundle);
@@ -97,7 +100,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ipAddress = ipEditText.getText().toString();
                 bundle.putString("ipAddress", ipAddress);
-                conectar();
+//                conectar();
                 Intent intent = new Intent(IdentificacaoActivity.this,
                         ClienteActivity.class);
                 intent.putExtras(bundle);
@@ -108,7 +111,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
 
     } //fim de onCreate
 
-    private void conectar() {
+    public void conectar() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -128,80 +131,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
 
     } //fim de conectar
 
-    public void ligarServidor() {
-        ConnectivityManager connManager;
-        connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network[] networks = connManager.getAllNetworks();
-
-        for (Network minhaRede : networks) {
-            NetworkInfo netInfo = connManager.getNetworkInfo(minhaRede);
-            if (netInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                NetworkCapabilities propDaRede = connManager.getNetworkCapabilities(minhaRede);
-
-                if (propDaRede.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    WifiManager wifiManager =
-                            (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-                    String macAddress = wifiManager.getConnectionInfo().getMacAddress();
-                    Log.v("GameCep", "Wifi - MAC:" + macAddress);
-
-                    ip = wifiManager.getConnectionInfo().getIpAddress();
-                    ipAddress =
-                            String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
-                    bundle.putInt("ip", ip);
-
-                    Log.v("GameCep", "Wifi - IP:" + ipAddress);
-
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ligarServerCodigo();
-                        }
-                    });
-                    t.start();
-                }
-            }
-        }
-    }
-
-    public void ligarServerCodigo() {
-        //Desabilitar o Botão de Ligar
-        criarServidorButton.post(new Runnable() {
-            @Override
-            public void run() {
-                criarServidorButton.setEnabled(false);
-            }
-        });
-
-        String result = "";
-        try {
-            Log.v("GameCep", "Ligando o Server");
-            bundle.putInt("porta", porta);
-            welcomeSocket = new ServerSocket(porta);
-            Socket connectionSocket = welcomeSocket.accept();
-            Log.v("GameCep", "Nova conexão");
-
-            //Instanciando os canais de stream
-            fromClient = new DataInputStream(connectionSocket.getInputStream());
-            socketOutput = new DataOutputStream(connectionSocket.getOutputStream());
-            continuarRodando = true;
-            while (continuarRodando) {
-                result = fromClient.readUTF();
-//                if (result.compareTo("PING") == 0) {
-////                    //enviar Pong
-////                    socketOutput.writeUTF("PONG");
-////                    socketOutput.flush();
-////                }
-            }
-
-            Log.v("GameCep", result);
-            //Enviando dados para o servidor
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-    private void verificaLocalizacao() {
+    public void verificaLocalizacao() {
         estadoTextView.setText("");
         cidadeTextView.setText("");
         bairroTextView.setText("");
@@ -311,6 +241,14 @@ public class IdentificacaoActivity extends AppCompatActivity {
                 networkCapabilities = connectivityManager.getNetworkCapabilities(network);
                 if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     Log.v("GameCep", "tem conexao");
+                    WifiManager wifiManager =
+                            (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                    ip = wifiManager.getConnectionInfo().getIpAddress();
+                    ipAddress =
+                            String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+                    bundle.putInt("ip", ip);
+
+                    Log.v("GameCep", "Wifi - IP:" + ipAddress);
                     temConexao = true;
                 }
             }

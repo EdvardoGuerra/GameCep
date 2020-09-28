@@ -2,7 +2,13 @@ package br.com.gamecep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class ServidorActivity extends AppCompatActivity {
     String nome;
@@ -79,6 +86,7 @@ public class ServidorActivity extends AppCompatActivity {
             ip = bundle.getInt("ip", 0);
             ipAddress =
                     String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+            Log.v("GameCep", "ip recuperado: " + ipAddress);
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
@@ -90,7 +98,66 @@ public class ServidorActivity extends AppCompatActivity {
         portaTextView.setText("9090");
         pontosTextView.setText("100");
 
+        ligarServidor();
+
         identificarInimigo();
+    }
+
+    public void ligarServidor() {
+        ConnectivityManager connManager;
+        connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network[] networks = connManager.getAllNetworks();
+
+        for (Network minhaRede : networks) {
+            NetworkInfo netInfo = connManager.getNetworkInfo(minhaRede);
+            if (netInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                NetworkCapabilities propDaRede = connManager.getNetworkCapabilities(minhaRede);
+
+                if (propDaRede.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    WifiManager wifiManager =
+                            (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ligarServerCodigo();
+                        }
+                    });
+                    t.start();
+                }
+            }
+        }
+    }
+
+    public void ligarServerCodigo() {
+
+        String result = "";
+        try {
+            Log.v("GameCep", "Ligando o Server");
+            bundle.putInt("porta", porta);
+            welcomeSocket = new ServerSocket(porta);
+            Socket connectionSocket = welcomeSocket.accept();
+            Log.v("GameCep", "Nova conexão");
+
+            //Instanciando os canais de stream
+            fromClient = new DataInputStream(connectionSocket.getInputStream());
+            socketOutput = new DataOutputStream(connectionSocket.getOutputStream());
+            continuarRodando = true;
+            socketOutput.writeUTF(nome);
+            while (continuarRodando) {
+                result = fromClient.readUTF();
+//                if (result.compareTo("PING") == 0) {
+////                    //enviar Pong
+////                    socketOutput.writeUTF("PONG");
+////                    socketOutput.flush();
+////                }
+            }
+
+            Log.v("GameCep", result);
+            //Enviando dados para o servidor
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void identificarInimigo(){
@@ -113,14 +180,26 @@ public class ServidorActivity extends AppCompatActivity {
             dicaTextView.setText("Errou. CEP Inimigo é menor");
             pontos--;
             Log.v("GameCep", "pontos: " + pontos);
-            atualizarPontos();
+//            Thread thread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    atualizarPontos();
+//                }
+//            });
+//            thread.start();
 
 
         } else if (cepParcial < cepParcialInimigo){
             dicaTextView.setText("Errou. CEP Inimigo é maior");
             pontos--;
             Log.v("GameCep", "pontos: " + pontos);
-            atualizarPontos();
+//            Thread thread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    atualizarPontos();
+//                }
+//            });
+//            thread.start();
 
         }
     }
@@ -150,7 +229,5 @@ public class ServidorActivity extends AppCompatActivity {
         localizarInimigoButton = findViewById(R.id.localizarInimigoButton);
         nomeInimigoTextView = findViewById(R.id.nomeInimigoTextView);
     }
-
-
 
 }

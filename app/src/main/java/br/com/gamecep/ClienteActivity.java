@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class ClienteActivity extends AppCompatActivity {
 
@@ -43,11 +44,13 @@ public class ClienteActivity extends AppCompatActivity {
     Button localizarInimigoButton;
     TextView nomeInimigoTextView;
     ServerSocket welcomeSocket;
+    Socket clientSocket;
     DataOutputStream socketOutput;
     BufferedReader socketEntrada;
     DataInputStream fromClient;
     boolean continuarRodando = false;
     public static final int numPorta = 9090;
+    DataInputStream socketInput;
 
 
     @Override
@@ -63,7 +66,6 @@ public class ClienteActivity extends AppCompatActivity {
         Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
         if (bundle != null) {
             nome = bundle.getString("nome", "Erro");
-            Log.v("GameCep", nome);
             cep = bundle.getString("cep", "Erro");
             estado = bundle.getString("estado", "Erro");
             cidade = bundle.getString("cidade", "Erro");
@@ -71,7 +73,6 @@ public class ClienteActivity extends AppCompatActivity {
             rua = bundle.getString("rua", "Erro");
             porta = bundle.getInt("porta", 0);
             ipAddress = bundle.getString("ipAddress", "0.0.0.0");
-//            ipAddress = String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
@@ -87,9 +88,38 @@ public class ClienteActivity extends AppCompatActivity {
 
     }
 
-    private void conectar() {
+    public void conectar() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    porta=9090;
+                    Log.v("GameCep", "IpAddress: " + ipAddress + " Porta: " + porta);
+                    clientSocket = new Socket(ipAddress, porta);
+                    dicaTextView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dicaTextView.setText("Conectado com "+ip+":9090");
+                        }
+                    });
+//                    Log.v("GameCep", "Conectado");
+                    socketOutput = new DataOutputStream(clientSocket.getOutputStream());
+                    socketInput = new DataInputStream(clientSocket.getInputStream());
+                    String nomeInimigoViaSocket = socketInput.readUTF();
+                    Log.v("GameCep", "inimigo socket: " + nomeInimigoViaSocket);
+                    Log.v("GameCep", "nome iminigo: " + nomeInimigo);
+                    while(socketInput!=null){
+                        String result = socketInput.readUTF();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v("GameCep", "Não conectou");
+                }
+            }
+        });
+        t.start();
 
-    }
+    } //fim de conectar
 
     private void inicializarElementos() {
         nomeTextView = findViewById(R.id.nomeTextView);
