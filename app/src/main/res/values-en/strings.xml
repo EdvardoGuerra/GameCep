@@ -41,4 +41,6 @@
     <string name="inimigo_maior">Enemy zip code is greater</string>
     <string name="cep_valido">Valid zip code</string>
     <string name="cep_invalido">Invalid zip code</string>
+    <string name="servidor">Server</string>
+    <string name="cliente">Client</string>
 </resources>

@@ -40,4 +40,6 @@
     <string name="inimigo_maior">Errou. CEP Inimigo é maior</string>
     <string name="cep_valido">CEP válido</string>
     <string name="cep_invalido">CEP inválido!!!</string>
+    <string name="servidor">Servidor</string>
+    <string name="cliente">Cliente</string>
 </resources>

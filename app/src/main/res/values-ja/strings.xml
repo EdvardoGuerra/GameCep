@@ -41,4 +41,6 @@
     <string name="inimigo_maior">敵の郵便番号は大きい</string>
     <string name="cep_valido">有効な郵便番号</string>
     <string name="cep_invalido">無効な郵便番号</string>
+    <string name="servidor">サーバ</string>
+    <string name="cliente">クライアント</string>
 </resources>

@@ -78,9 +78,7 @@ public class ServidorActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        if (bundle != null) {
-            Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
-        }
+        Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
         if (bundle != null) {
             nome = bundle.getString("nome", "Erro");
             cep = bundle.getString("cep", "Erro");
@@ -92,8 +90,8 @@ public class ServidorActivity extends AppCompatActivity {
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
         ipTextView.setText(ipAddress);
-        portaTextView.setText(R.string._9090);
-        pontosTextView.setText(R.string._100);
+        portaTextView.setText("9090");
+        pontosTextView.setText("100");
 
         ligarServidor();
     }
@@ -105,7 +103,7 @@ public class ServidorActivity extends AppCompatActivity {
 
         for (Network minhaRede : networks) {
             NetworkInfo netInfo = connManager.getNetworkInfo(minhaRede);
-            if (netInfo != null && netInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+            if (netInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
                 NetworkCapabilities propDaRede = connManager.getNetworkCapabilities(minhaRede);
 
                 if (propDaRede.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
@@ -192,10 +190,10 @@ public class ServidorActivity extends AppCompatActivity {
         int cepParcial = Integer.parseInt(cepInicioEditText.getText().toString());
         int cepParcialInimigo = Integer.parseInt(cepInimigoInicio);
         if (cepParcial == cepParcialInimigo) {
-            dicaTextView.setText(R.string.parabens);
+            dicaTextView.setText("Parabéns. Você acertou");
             verificaLocalizacao();
         } else if (cepParcial > cepParcialInimigo) {
-            dicaTextView.setText(R.string.inimigo_menor);
+            dicaTextView.setText("Errou. CEP Inimigo é menor");
             pontos--;
             Log.v("GameCep", "pontos: " + pontos);
             Thread threadPontos = new Thread(new Runnable() {
@@ -208,7 +206,7 @@ public class ServidorActivity extends AppCompatActivity {
 
 
         } else if (cepParcial < cepParcialInimigo) {
-            dicaTextView.setText(R.string.inimigo_maior);
+            dicaTextView.setText("Errou. CEP Inimigo é maior");
             pontos--;
             Log.v("GameCep", "pontos: " + pontos);
             Thread threadPontos = new Thread(new Runnable() {
@@ -262,7 +260,7 @@ public class ServidorActivity extends AppCompatActivity {
             connection.setDoInput(true);
             connection.connect();
 
-            String[] resultado = new String[1];
+            String resultado[] = new String[1];
             int respostaConexao = connection.getResponseCode();
 
 
@@ -280,11 +278,11 @@ public class ServidorActivity extends AppCompatActivity {
 
                 JSONObject resultadoJsonObject = new JSONObject(resultado[0]);
 
-                final String resultadoInimigoEstado = resultadoJsonObject.getString("uf");
+                final String resultadoInimigoEstado = resultadoJsonObject.getString("uf").toString();
                 Log.v("GameCep", "estado inimigo " + resultadoInimigoEstado);
-                final String resultadoInimigoCidade = resultadoJsonObject.getString("localidade");
-                final String resultadoInimigoBairro = resultadoJsonObject.getString("bairro");
-                final String resultadoInimigoRua = resultadoJsonObject.getString("logradouro");
+                final String resultadoInimigoCidade = resultadoJsonObject.getString("localidade").toString();
+                final String resultadoInimigoBairro = resultadoJsonObject.getString("bairro").toString();
+                final String resultadoInimigoRua = resultadoJsonObject.getString("logradouro").toString();
                 Log.v("GameCep", resultadoInimigoRua);
 
                 final Thread atualizaEnderecoInimigoThread = new Thread(new Runnable() {
