@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,10 +32,10 @@ public class ClienteActivity extends AppCompatActivity {
     String cepInimigo;
     TextView nomeTextView;
     TextView cepTextView;
-    TextView estadoTextView;
-    TextView cidadeTextView;
-    TextView bairroTextView;
-    TextView ruaTextView;
+    TextView estadoInimigoTextView;
+    TextView cidadeInimigoTextView;
+    TextView bairroInimigoTextView;
+    TextView ruaInimigoTextView;
     TextView portaTextView;
     TextView ipTextView;
     EditText cepInicioEditText;
@@ -51,37 +52,36 @@ public class ClienteActivity extends AppCompatActivity {
     boolean continuarRodando = false;
     public static final int numPorta = 9090;
     DataInputStream socketInput;
+    String cepInimigoInicio;
+    String cepInimigoFim;
+    int pontos;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
-
         setTitle("Cliente");
         inicializarElementos();
 
+        nomeInimigo = "Fulano";
+        cepInimigo = "00000000";
+
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
+        if (bundle != null) {
+            Log.v("GameCep", "Bundle: " + bundle.getString("estado", "Erro"));
+        }
         if (bundle != null) {
             nome = bundle.getString("nome", "Erro");
             cep = bundle.getString("cep", "Erro");
-            estado = bundle.getString("estado", "Erro");
-            cidade = bundle.getString("cidade", "Erro");
-            bairro = bundle.getString("bairro", "Erro");
-            rua = bundle.getString("rua", "Erro");
-            porta = bundle.getInt("porta", 0);
             ipAddress = bundle.getString("ipAddress", "0.0.0.0");
         }
         nomeTextView.setText(nome);
         cepTextView.setText(cep);
-        estadoTextView.setText(estado);
-        cidadeTextView.setText(cidade);
-        bairroTextView.setText(bairro);
-        ruaTextView.setText(rua);
         ipTextView.setText(ipAddress);
-        portaTextView.setText("9090");
+        portaTextView.setText(R.string._9090);
+        pontosTextView.setText(R.string._100);
 
         conectar();
 
@@ -99,18 +99,34 @@ public class ClienteActivity extends AppCompatActivity {
                     dicaTextView.post(new Runnable() {
                         @Override
                         public void run() {
-                            dicaTextView.setText("Conectado com "+ip+":9090");
+                            dicaTextView.setText(String.format("Conectado:%s:9090", ipAddress));
                         }
                     });
-//                    Log.v("GameCep", "Conectado");
-                    socketOutput = new DataOutputStream(clientSocket.getOutputStream());
                     socketInput = new DataInputStream(clientSocket.getInputStream());
-                    String nomeInimigoViaSocket = socketInput.readUTF();
-                    Log.v("GameCep", "inimigo socket: " + nomeInimigoViaSocket);
-                    Log.v("GameCep", "nome iminigo: " + nomeInimigo);
-                    while(socketInput!=null){
-                        String result = socketInput.readUTF();
-                    }
+                    socketOutput = new DataOutputStream(clientSocket.getOutputStream());
+
+                    //envia seu proprio nome e cep para o inimigo
+                    socketOutput.writeUTF(nome+";"+cep);
+
+                    //lê nome e cep do inimigo (cliente)
+                    String mensagem = socketInput.readUTF();
+                    String[] mensagemSeparada = mensagem.split(";");
+                    nomeInimigo = mensagemSeparada[0];
+                    cepInimigo = mensagemSeparada[1];
+                    nomeInimigo = mensagemSeparada[0];
+                    cepInimigo = mensagemSeparada[1];
+                    cepInimigoInicio = cepInimigo.substring(0, 3);
+                    cepInimigoFim = cepInimigo.substring(3, 5) + "-" + cepInimigo.substring(5);
+
+                    Thread threadAtualizaNome = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            atualizaNome();
+                        }
+                    });
+                    threadAtualizaNome.start();
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.v("GameCep", "Não conectou");
@@ -121,13 +137,71 @@ public class ClienteActivity extends AppCompatActivity {
 
     } //fim de conectar
 
+    public void atualizaNome() {
+        nomeInimigoTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                nomeInimigoTextView.setText(nomeInimigo);
+            }
+        });
+        cepFimTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                cepFimTextView.setText(cepInimigoFim);
+            }
+        });
+    }
+
+    public void localizarInimigo(View view) {
+        int cepParcial = Integer.parseInt(cepInicioEditText.getText().toString());
+        int cepParcialInimigo = Integer.parseInt(cepInimigoInicio);
+        if (cepParcial == cepParcialInimigo) {
+            dicaTextView.setText(R.string.parabens);
+        } else if (cepParcial > cepParcialInimigo) {
+            dicaTextView.setText(R.string.inimigo_menor);
+            pontos--;
+            Log.v("GameCep", "pontos: " + pontos);
+            Thread threadPontos = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    atualizarPontos();
+                }
+            });
+            threadPontos.start();
+
+
+        } else if (cepParcial < cepParcialInimigo) {
+            dicaTextView.setText(R.string.inimigo_maior);
+            pontos--;
+            Log.v("GameCep", "pontos: " + pontos);
+            Thread threadPontos = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    atualizarPontos();
+                }
+            });
+            threadPontos.start();
+
+        }
+    }
+
+    public void atualizarPontos() {
+        pontosTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                String s = String.valueOf(pontos);
+                pontosTextView.setText(s);
+            }
+        });
+    }
+
     private void inicializarElementos() {
         nomeTextView = findViewById(R.id.nomeTextView);
         cepTextView = findViewById(R.id.cepTextView);
-        estadoTextView = findViewById(R.id.estadoTextView);
-        cidadeTextView = findViewById(R.id.cidadeTextView);
-        bairroTextView = findViewById(R.id.bairroTextView);
-        ruaTextView = findViewById(R.id.ruaTextView);
+        estadoInimigoTextView = findViewById(R.id.estadoInimigoTextView);
+        cidadeInimigoTextView = findViewById(R.id.cidadeInimigoTextView);
+        bairroInimigoTextView = findViewById(R.id.bairroInimigoTextView);
+        ruaInimigoTextView = findViewById(R.id.ruaInimigoTextView);
         portaTextView = findViewById(R.id.portaTextView);
         ipTextView = findViewById(R.id.ipTextView);
         cepInicioEditText = findViewById(R.id.cepInicioEditText);

@@ -120,7 +120,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
                     Log.v("GameCep", "Conectado");
                     socketOutput = new DataOutputStream(clientSocket.getOutputStream());
                     socketInput = new DataInputStream(clientSocket.getInputStream());
-                    while(socketInput!=null){
+                    while (socketInput != null) {
                         String result = socketInput.readUTF();
                     }
                 } catch (Exception e) {
@@ -150,7 +150,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
             connection.setDoInput(true);
             connection.connect();
 
-            String resultado[] = new String[1];
+            String[] resultado = new String[1];
             int respostaConexao = connection.getResponseCode();
 
 
@@ -167,17 +167,19 @@ public class IdentificacaoActivity extends AppCompatActivity {
                 Log.v("GameCep", "resutado " + resultado[0]);
 
                 JSONObject resultadoJsonObject = new JSONObject(resultado[0]);
+
 //                final String resultadoErro = resultadoJsonObject.getString("erro");
-//                Log.v("GameCep", "erro " + resultadoErro.toString());
-//
-//                if (resultadoErro == null){
-//                    Toast.makeText(this,
-//                            "CEP inválido", Toast.LENGTH_LONG).show();
+//                if (resultadoErro.equals("true")) {
+//                    Log.v("GameCep", "Cep invalido " + resultadoErro.toString());
+//                    cepMensagem(false);
+//                } else {
+//                    cepMensagem(true);
 //                }
-                final String resultadoEstado = resultadoJsonObject.getString("uf").toString();
-                final String resultadoCidade = resultadoJsonObject.getString("localidade").toString();
-                final String resultadoBairro = resultadoJsonObject.getString("bairro").toString();
-                final String resultadoRua = resultadoJsonObject.getString("logradouro").toString();
+
+                final String resultadoEstado = resultadoJsonObject.getString("uf");
+                final String resultadoCidade = resultadoJsonObject.getString("localidade");
+                final String resultadoBairro = resultadoJsonObject.getString("bairro");
+                final String resultadoRua = resultadoJsonObject.getString("logradouro");
 
                 estadoTextView.setText(resultadoEstado);
                 cidadeTextView.setText(resultadoCidade);
@@ -186,26 +188,32 @@ public class IdentificacaoActivity extends AppCompatActivity {
 
                 bundle.putString("nome", nomeEditText.getText().toString());
                 bundle.putString("cep", cepEditText.getText().toString());
-                bundle.putString("estado", estadoTextView.getText().toString());
-                bundle.putString("cidade", cidadeTextView.getText().toString());
-                bundle.putString("bairro", bairroTextView.getText().toString());
-                bundle.putString("rua", ruaTextView.getText().toString());
                 Log.v("GameCep", bundle.toString());
-
-//                if (estadoTextView.getText() == ""){
-//                    localValidoTextView.setText("Localização inválida. Tente novamente!!!");
-//                } else {
-//                    localValidoTextView.setText("Localização válida");
-//                }
-
 
             } else {
                 Toast.makeText(this,
                         "Sem conexão", Toast.LENGTH_LONG).show();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void cepMensagem(boolean b) {
+        if (b) {
+            localValidoTextView.post(new Runnable() {
+                @Override
+                public void run() {
+                    localValidoTextView.setText(R.string.cep_valido);
+                }
+            });
+        } else {
+            localValidoTextView.post(new Runnable() {
+                @Override
+                public void run() {
+                    localValidoTextView.setText(R.string.cep_invalido);
+                }
+            });
         }
     }
 
@@ -236,10 +244,10 @@ public class IdentificacaoActivity extends AppCompatActivity {
 
         for (Network network : networks) {
             networkInfo = connectivityManager.getNetworkInfo(network);
-            if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+            if (networkInfo != null && networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
                 NetworkCapabilities networkCapabilities;
                 networkCapabilities = connectivityManager.getNetworkCapabilities(network);
-                if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                if (networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     Log.v("GameCep", "tem conexao");
                     WifiManager wifiManager =
                             (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -263,7 +271,7 @@ public class IdentificacaoActivity extends AppCompatActivity {
         NetworkInfo networkInfo;
         for (Network network : networks) {
             networkInfo = connectivityManager.getNetworkInfo(network);
-            if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+            if (networkInfo != null && networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
                 Log.v("GameCep", "tipo de conexão conectada:" + networkInfo.getTypeName());
             }
         }
@@ -275,13 +283,13 @@ public class IdentificacaoActivity extends AppCompatActivity {
         cepEditText = findViewById(R.id.cepTextView);
         verificarLocalizacaoButton = findViewById(R.id.verificarLocalizacaoButton);
         estadoLabelTextView = findViewById(R.id.estadoLabelTextView);
-        estadoTextView = findViewById(R.id.estadoTextView);
+        estadoTextView = findViewById(R.id.estadoInimigoTextView);
         cidadeLabelTextView = findViewById(R.id.cidadeLabelTextView);
-        cidadeTextView = findViewById(R.id.cidadeTextView);
+        cidadeTextView = findViewById(R.id.cidadeInimigoTextView);
         bairroLabelTextView = findViewById(R.id.bairroLabelTextView);
-        bairroTextView = findViewById(R.id.bairroTextView);
+        bairroTextView = findViewById(R.id.bairroInimigoTextView);
         ruaLabelTextView = findViewById(R.id.ruaLabelTextView);
-        ruaTextView = findViewById(R.id.ruaTextView);
+        ruaTextView = findViewById(R.id.ruaInimigoTextView);
         localValidoTextView = findViewById(R.id.localValidoTextView);
         criarServidorButton = findViewById(R.id.criarServidorButton);
         entrarJogoButton = findViewById(R.id.entrarJogoButton);

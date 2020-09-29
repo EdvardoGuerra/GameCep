@@ -31,8 +31,13 @@
     <string name="_00_000">00-000</string>
     <string name="dica">Dica:</string>
     <string name="pontos">Pontos</string>
-    <string name="_100">100</string>
     <string name="ip">IP:</string>
-    <string name="_9090">9090</string>
     <string name="xxx_xxx_x_x">xxx.xxx.x.x</string>
+    <string name="_9090">9090</string>
+    <string name="_100">100</string>
+    <string name="parabens">Parabéns. Você acertou</string>
+    <string name="inimigo_menor">Errou. CEP Inimigo é menor</string>
+    <string name="inimigo_maior">Errou. CEP Inimigo é maior</string>
+    <string name="cep_valido">CEP válido</string>
+    <string name="cep_invalido">CEP inválido!!!</string>
 </resources>

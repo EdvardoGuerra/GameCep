@@ -62,19 +62,20 @@
         android:importantForAutofill="no"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/cepLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/estadoTextView"
+        app:layout_constraintStart_toStartOf="@+id/estadoInimigoTextView"
         app:layout_constraintTop_toTopOf="@+id/cepLabelTextView" />
 
     <TextView
         android:id="@+id/estadoLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:text="@string/estado_label"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cepLabelTextView"
-        app:layout_constraintTop_toBottomOf="@+id/cepLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/pontosTextView" />
 
     <TextView
         android:id="@+id/cidadeLabelTextView"
@@ -110,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/bairroLabelTextView" />
 
     <TextView
-        android:id="@+id/estadoTextView"
+        android:id="@+id/estadoInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/estado"
@@ -119,11 +120,11 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/estadoLabelTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/estadoLabelTextView" />
 
     <TextView
-        android:id="@+id/cidadeTextView"
+        android:id="@+id/cidadeInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/cidade"
@@ -131,10 +132,10 @@
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/cidadeLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/estadoTextView" />
+        app:layout_constraintStart_toStartOf="@+id/estadoInimigoTextView" />
 
     <TextView
-        android:id="@+id/bairroTextView"
+        android:id="@+id/bairroInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/bairro"
@@ -142,17 +143,17 @@
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/bairroLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/cidadeTextView" />
+        app:layout_constraintStart_toStartOf="@+id/cidadeInimigoTextView" />
 
     <TextView
-        android:id="@+id/ruaTextView"
+        android:id="@+id/ruaInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="13"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/ruaLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/bairroTextView" />
+        app:layout_constraintStart_toStartOf="@+id/bairroInimigoTextView" />
 
     <TextView
         android:id="@+id/textView2"
@@ -164,7 +165,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ruaTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/cepTextView" />
 
     <TextView
         android:id="@+id/porta_labelTextView"
@@ -174,7 +175,7 @@
         android:text="@string/porta"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/ruaLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/cepLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
@@ -185,7 +186,7 @@
         android:ems="13"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/porta_labelTextView"
-        app:layout_constraintStart_toStartOf="@+id/ruaTextView"
+        app:layout_constraintStart_toStartOf="@+id/ruaInimigoTextView"
         app:layout_constraintTop_toTopOf="@+id/porta_labelTextView"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -240,7 +241,7 @@
         android:ems="3"
         android:hint="@string/_000"
         android:importantForAutofill="no"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/cep2_labelTextView"
         app:layout_constraintStart_toStartOf="@+id/ipTextView"
@@ -250,7 +251,6 @@
         android:id="@+id/cepFimTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/zeros"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/cep2_labelTextView"
@@ -261,7 +261,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/botao_azul_arredondado"
-        android:ems="8"
+        android:ems="6"
+        android:onClick="localizarInimigo"
         android:text="@string/localizar"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/cepInicioEditText"
@@ -284,7 +285,7 @@
         android:id="@+id/dicaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="8"
+        android:ems="14"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/dica_labelTextView"
         app:layout_constraintStart_toStartOf="@+id/cepInicioEditText" />

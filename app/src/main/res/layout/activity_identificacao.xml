@@ -125,9 +125,10 @@
         app:layout_constraintTop_toBottomOf="@+id/bairroLabelTextView" />
 
     <TextView
-        android:id="@+id/estadoTextView"
+        android:id="@+id/estadoInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:contentDescription="@string/estado"
         android:ems="13"
         android:textSize="18sp"
@@ -138,7 +139,7 @@
         app:layout_constraintStart_toEndOf="@+id/estadoLabelTextView" />
 
     <TextView
-        android:id="@+id/cidadeTextView"
+        android:id="@+id/cidadeInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/cidade"
@@ -146,10 +147,10 @@
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/cidadeLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/estadoTextView" />
+        app:layout_constraintStart_toStartOf="@+id/estadoInimigoTextView" />
 
     <TextView
-        android:id="@+id/bairroTextView"
+        android:id="@+id/bairroInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/bairro"
@@ -157,17 +158,17 @@
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/bairroLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/cidadeTextView" />
+        app:layout_constraintStart_toStartOf="@+id/cidadeInimigoTextView" />
 
     <TextView
-        android:id="@+id/ruaTextView"
+        android:id="@+id/ruaInimigoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="13"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/ruaLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/bairroTextView" />
+        app:layout_constraintStart_toStartOf="@+id/bairroInimigoTextView" />
 
     <TextView
         android:id="@+id/localValidoTextView"
@@ -179,7 +180,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ruaTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/ruaInimigoTextView" />
 
     <Button
         android:id="@+id/criarServidorButton"
