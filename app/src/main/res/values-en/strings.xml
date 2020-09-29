@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GameZip</string>
+    <string name="criar_servidor">Create Server</string>
+    <string name="entrar_como_jogador">Enter as player</string>
+    <string name="identifique_se">Log in</string>
+    <string name="nome">Name:</string>
+    <string name="nome_do_jogador">Player name</string>
+    <string name="cep">ZIP:</string>
+    <string name="cep_do_jogador">CEP do jogador</string>
+    <string name="verificar_localizacao">Check Location</string>
+    <string name="estado_label">State:</string>
+    <string name="cidade_label">City:</string>
+    <string name="bairro_label">Neighb.:</string>
+    <string name="rua_av_label">Street:</string>
+    <string name="estado">State</string>
+    <string name="cidade">City</string>
+    <string name="bairro">Neighborhood</string>
+    <string name="rua_avenida">Street</string>
+    <string name="gamecep">GameZip</string>
+    <string name="local_valido">Valid Location</string>
+    <string name="jogador">Player</string>
+    <string name="inimigo">Enemy</string>
+    <string name="porta">Door:</string>
+    <string name="ip_label">IP:</string>
+    <string name="endereco_ip">IP Address</string>
+    <string name="dados_conexao">Connection Data</string>
+    <string name="zeros">00-000</string>
+    <string name="cep_inimigo">Enemy initial zip code</string>
+    <string name="localizar">Find</string>
+    <string name="_000">000</string>
+    <string name="_00_000">00-000</string>
+    <string name="dica">Hint:</string>
+    <string name="pontos">Score</string>
+    <string name="ip">IP:</string>
+    <string name="xxx_xxx_x_x">xxx.xxx.x.x</string>
+    <string name="_9090">9090</string>
+    <string name="_100">100</string>
+    <string name="parabens">Congratulations. You\'re right</string>
+    <string name="inimigo_menor">Enemy zip is smaller</string>
+    <string name="inimigo_maior">Enemy zip code is greater</string>
+    <string name="cep_valido">Valid zip code</string>
+    <string name="cep_invalido">Invalid zip code</string>
+</resources>
